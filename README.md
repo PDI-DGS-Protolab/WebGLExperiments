@@ -7,7 +7,7 @@ A set of experiments implemented with WebGL using different frameworks such as T
 
 ### Authors
 
-The members of the Open Innovation Lab. (*Technical University of Madrid*)
+The members of the Open Innovation Lab. (*Universidad Politécnica de Madrid*)
 
 Alberto Blázquez, [albertoblaz](https://github.com/albertoblaz)
 
