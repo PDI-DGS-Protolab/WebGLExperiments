@@ -20,9 +20,6 @@ function init() {
     camera = new THREE.PerspectiveCamera( 75, canvas.width / canvas.height, 0.1, 200000 );
     camera.position.z = 2000;
     
-    // Camera controls
-    setControls (camera);
-    
     // Skybox
     var urlPrefix	= "../../assets/textures/OrangeCreamSky";
 	var urls = [ urlPrefix + "/2.jpg", urlPrefix + "/4.jpg",
@@ -54,6 +51,10 @@ function init() {
     var material = new THREE.MeshLambertMaterial();
     var mesh = new THREE.Mesh( geometry, material );
     scene.add( mesh );
+    
+        
+    // Camera controls
+    setControls (camera);
 
 }
 
