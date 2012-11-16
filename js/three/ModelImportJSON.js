@@ -54,16 +54,29 @@ function init() {
     
     // Model import
     var loader = new THREE.JSONLoader();
-	loader.load( "../../assets/models/Wolf.js", onGeometry );
-}
-
-function onGeometry (geom) {
+	// loader.load( "../../assets/models/Wolf.js", onGeometry );
+// }
+// 
+// function onGeometry (geom) {
+// 	
+	// wolf = new THREE.Mesh( geom, new THREE.ImageUtils.loadTexture("../../assets/textures/Wolf_Diffuse_256x256.jpg" );
+	// wolf.scale.set(20, 20, 20);
+	// wolf.position.set(0, -500, 0);
+	// // wolf.geometry.dynamic  = true;
+	// // wolf.geometry.dirty = true;
+	// wolf.overdraw = true;
+	// scene.add(wolf);
 	
-	wolf = new THREE.Mesh( geom, new THREE.MeshLambertMaterial());
-	wolf.scale.set(20, 20, 20);
-	wolf.position.set(0, -500, 0);
-	wolf.overdraw = true;
-	scene.add(wolf);
+	tex = THREE.ImageUtils.loadTexture('../../assets/textures/Wolf_Diffuse_256x256.jpg', null, function () {
+            mat = new THREE.MeshPhongMaterial({ map: tex });
+            loader.load('../../assets/models/Wolf.js', function (geo) {
+                wolf = new THREE.Mesh(geo, mat);
+                wolf.scale.set(20, 20, 20);
+				wolf.position.set(0, -500, 0);
+                // etc, etc
+                scene.add(wolf);
+            });
+        });
 }
 
 function animate() {
