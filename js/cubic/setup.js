@@ -1,41 +1,60 @@
+
 (function (CubicVR, undefined){
 
     "use strict";
 
-    function webGLStart(gl,canvas) {
+
+    function webGLStart (gl, canvas) {
+
+        var CubicVR = window.CubicVR;
+
         var scene = new CubicVR.Scene({
-            light   :{
+            light : {
+                name     : "light",
+                type     : "point",
+                position : [1.0, 1.5, -2.0]
             },
-            camera  :{
+
+            camera : {
                 name     : "camera",
                 width    : canvas.width,
                 height   : canvas.height,
                 position : [1,1,1],
-                lookat   : [0,0,0]
+                lookat   : [0,0,0],
+                fov      : 60.0
             },
-            obj     :{
-                name        : "cube",
-                primitive   : {
-                    type     : "box",
-                    size     : 1.0,
-                    uvmapper : {
-                        projectionMode : "cubic",
-                        scale : [1,1,1]
-                    }
-                },
-                compile : true
+
+            sceneObject : {
+                name     : "cube",
+                position : [0.0, 0.0, 0.0],
+                mesh     : {
+                    primitive : {
+                        type     : "box",
+                        size     : 1.0,
+                        uvmapper : {
+                            projectionMode : "cubic",
+                            scale : [1,1,1]
+                        }
+                    },
+
+                    compile : true
+                }
             }
         });
 
         CubicVR.addResizeable(scene.camera);
 
-        scene.setSkyBox();
+        scene.setSkyBox(new CubicVR.SkyBox({
+            texture : 'assets/textures/skybox.jpg'
+        }));
 
-        CubicVR.MainLoop(function(timer,gl){
+        CubicVR.MainLoop(function(timer, gl) {
             scene.render();
         });
     }
 
-    CubicVR.start('auto',webGLStart);
+
+    CubicVR.start('auto', webGLStart);
+
 
 })( CubicVR );
