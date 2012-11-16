@@ -51,15 +51,27 @@ function init() {
     var material = new THREE.MeshLambertMaterial();
     var mesh = new THREE.Mesh( geometry, material );
     scene.add( mesh );
+    
+        
+    // Camera controls
+    setControls (camera);
 
 }
 
 function animate() {
     requestAnimationFrame( animate );
+    controls.update();
     render();
 }
 
 
 function render () {
     renderer.render(scene, camera);
+}
+
+
+function setControls (camera){
+    controls = new THREE.TrackballControls( camera ); // Creates the controls
+    controls.addEventListener( 'change', render );    // Adds a listener for them to work
+    controls.maxDistance = 50000;
 }
