@@ -54,29 +54,55 @@ function init() {
     
     // Model import
     var loader = new THREE.JSONLoader();
-	// loader.load( "../../assets/models/Wolf.js", onGeometry );
-// }
+	 // loader.load( "../../assets/models/Wolf.js", onGeometry );
+ // }
 // 
 // function onGeometry (geom) {
-// 	
-	// wolf = new THREE.Mesh( geom, new THREE.ImageUtils.loadTexture("../../assets/textures/Wolf_Diffuse_256x256.jpg" );
+	// var mat = new THREE.TextureLoader();
+	// mat.load('../../assets/textures/Wolf_Diffuse_256x256.jpg');
+	// material = new THREE.MeshBasicMaterial( { color: 0xffffff, map: new THREE.Texture(), morphTargets: true } );
+	// image = '../../assets/textures/Wolf_Diffuse_256x256.jpg';
+	// mat.map.image = image;
+	// wolf = new THREE.Mesh( geom, mat );
 	// wolf.scale.set(20, 20, 20);
 	// wolf.position.set(0, -500, 0);
 	// // wolf.geometry.dynamic  = true;
-	// // wolf.geometry.dirty = true;
 	// wolf.overdraw = true;
 	// scene.add(wolf);
+// 	
+
 	
-	tex = THREE.ImageUtils.loadTexture('../../assets/textures/Wolf_Diffuse_256x256.jpg', null, function () {
-            mat = new THREE.MeshPhongMaterial({ map: tex });
-            loader.load('../../assets/models/Wolf.js', function (geo) {
-                wolf = new THREE.Mesh(geo, mat);
-                wolf.scale.set(20, 20, 20);
-				wolf.position.set(0, -500, 0);
-                // etc, etc
-                scene.add(wolf);
-            });
-        });
+	// tex = THREE.ImageUtils.loadTexture('../../assets/textures/Wolf_Diffuse_256x256.jpg', null, function () {
+            // mat = new THREE.MeshBasicMaterial({ map: tex, morphTargets: true });
+            // loader.load('../../assets/models/Wolf.js', function (geo) {
+                // wolf = new THREE.Mesh(geo, mat);
+                // wolf.scale.set(20, 20, 20);
+				// wolf.position.set(0, -500, 0);
+                // // etc, etc
+                // scene.add(wolf);
+            // });
+        // });
+         
+			loader.createModel( JSON.parse('../../assets/models/Wolf.js'), function( geometry ) {
+
+						mat = new THREE.MeshBasicMaterial( { color: 0xffffff, map: new THREE.Texture(), morphTargets: true } );
+
+						mesh = new THREE.MorphAnimMesh( geometry, mat );
+						mesh.rotation.y = -Math.PI/2;
+						mesh.scale.set(5,5,5);
+						mesh.duration = 1000*(md.info.frames/10);
+
+						scene.add( mesh );
+					} );
+				var image = document.createElement( 'img' );
+				mat.map.image = image;
+
+				image.onload = function () {
+					mat.map.needsUpdate = true;
+				};
+
+				image.src = '../../assets/textures/Wolf_Diffuse_256x256.jpg';
+                
 }
 
 function animate() {
