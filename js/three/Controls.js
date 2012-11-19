@@ -41,10 +41,10 @@ function init() {
     camera.position.z = 2000;
     
     // Skybox
-    var urlPrefix	= "../../assets/textures/OrangeCreamSky";
-	var urls = [ urlPrefix + "/2.jpg", urlPrefix + "/4.jpg",
-			urlPrefix + "/5.jpg", urlPrefix + "/6.jpg",
-			urlPrefix + "/1.jpg", urlPrefix + "/3.jpg" ];
+    var urlPrefix	= "../../assets/textures";
+	var urls = [ urlPrefix + "/skybox1.jpg", urlPrefix + "/skybox3.jpg",
+			urlPrefix + "/skybox5.jpg", urlPrefix + "/skybox4.jpg",
+			urlPrefix + "/skybox2.jpg", urlPrefix + "/skybox6.jpg" ];
 			
 	var textureCube	= THREE.ImageUtils.loadTextureCube( urls );
 
