@@ -8,55 +8,123 @@
 
         var CubicVR = window.CubicVR;
 
+        /* Creating a new scene */
+
         var scene = new CubicVR.Scene({
 
             light : {
                 name     : "light",
                 type     : "point",
-                position : [1.0, 1.5, -2.0]
+                position : [0.0, 2.0, 0.0]
             },
 
             camera : {
                 name     : "camera",
                 width    : canvas.width,
                 height   : canvas.height,
-                position : [1, 1, 1],
+                position : [0.0, 0.5, -2.0],
                 target   : [0, 0, 0],
                 fov      : 60.0
             },
 
-            sceneObject : {
-                name     : "cube",
-                position : [0.0, 0.0, 0.0],
-                mesh     : {
-                    primitive : {
-                        type     : "box",
-                        size     : 1.0,
-                        uvmapper : {
-                            projectionMode : "cubic",
-                            scale : [1,1,1]
-                        }
-                    },
+            sceneObjects : [
 
-                    compile : true
-                }
-            }
+            ]
 
         });
-
-
-        // Camera resizable with enabled controls
-        CubicVR.addResizeable(scene.camera);
-        var mvc = new CubicVR.MouseViewController(canvas, scene.camera);
-
 
         scene.setSkyBox(new CubicVR.SkyBox({
             texture : 'assets/textures/skybox.jpg'
         }));
 
 
+        /* Importing a model in XML format */
+
+        var shipMesh = new CubicVR.loadMesh("assets/models/starship/ship-main.xml");
+        shipMesh.clean();
+
+        var shipObject = new CubicVR.SceneObject({
+            name : 'car',
+            mesh : shipMesh,
+            position : [ 0, 0, 0 ],
+            rotation : [ 0, 180, 0 ],
+            scale : [ 0.1, 0.1, 0.1 ]
+        });
+
+        scene.bind(shipObject);
+
+        // Camera resizable with enabled controls
+        CubicVR.addResizeable(scene.camera);
+
+
+        /* Movement variables */
+
+        var rot = 0;
+        var moving  = 0;
+        var turning = 0;
+        var speedMod = 15;
+
+
+        /* Configuring ship controls */
+
+        var mvc = new CubicVR.MouseViewController(canvas, scene.camera);
+
+        mvc.bindEvent('keyDown', function(ctx, mpos, keyCode, keyState) {
+
+            var kbd = CubicVR.keyboard;
+
+            if (keyCode === kbd.UP_ARROW) {
+                moving = 1;
+
+            } else if (keyCode === kbd.DOWN_ARROW) {
+                moving = -1;
+            }
+
+            if (keyCode === kbd.LEFT_ARROW) {
+                turning = 1;
+
+            } else if (keyCode === kbd.RIGHT_ARROW) {
+                turning = -1;
+            }
+
+        });
+
+        mvc.bindEvent('keyUp', function(ctx, mpos, keyCode, keyState) {
+
+            var kbd = CubicVR.keyboard;
+
+            if (keyCode === kbd.UP_ARROW || keyCode === kbd.DOWN_ARROW) {
+                moving = 0;
+
+            } else if (keyCode === kbd.LEFT_ARROW || keyCode === kbd.RIGHT_ARROW) {
+                turning = 0;
+            }
+
+        });
+
+
+        /* Main Animation Loop */
+
         CubicVR.MainLoop(function(timer, gl) {
+
+            var car = scene.getSceneObject('car');
+
+            if (moving) {
+                var move  = moving / speedMod;
+                var angle = rot * Math.PI / 180;
+                car.x += move * Math.sin(angle);
+                car.z += move * Math.cos(angle);
+            }
+
+            if (turning) {
+                rot += turning;
+                rot %= 360;
+                car.rotY += turning;
+            }
+
+            scene.camera.target = [ car.x, car.y, car.z ];
             scene.render();
+
         });
 
     }
