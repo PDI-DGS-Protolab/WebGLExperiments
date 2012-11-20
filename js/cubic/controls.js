@@ -8,6 +8,8 @@
 
         var CubicVR = window.CubicVR;
 
+        /* Creating a new scene */
+
         var scene = new CubicVR.Scene({
 
             light : {
@@ -26,67 +28,50 @@
             },
 
             sceneObjects : [
-                {
-                    name : "plane",
-                    position : [0.0, 0.0, 0.0],
-                    rotation : [90, 0, 0],
-                    mesh: {
-                        primitive: {
-                            type: "plane",
-                            size: 10.0,
-                            material: {
-                                textures: {
-                                    color: "assets/textures/plane.jpg"
-                                }
-                            },
-                            uv: {
-                                projectionMode: "planar"
-                                //scale: [0.015, 0.015, 0.015]
-                            }
-                        },
-                        compile: true
-                    }
-                }
+
             ]
 
         });
 
+        scene.setSkyBox(new CubicVR.SkyBox({
+            texture : 'assets/textures/skybox.jpg'
+        }));
 
-        // Collada model imported
-/*
-        var colladaScene = CubicVR.loadCollada("assets/duck/duck.dae", "assets/duck/");
-        var duckMesh = colladaScene.getSceneObject("LOD3sp").obj;           // need to know it's name in the default scene
-        var duck = new CubicVR.SceneObject({                            // SceneObject container for the mesh
-            name : 'duck',
-            mesh : duckMesh,
-            position: [ 0.0, -0.05, 0.0 ],
-            scale : [ 0.005, 0.005, 0.005 ]
-        });
-        scene.bindSceneObject(duck);
-*/
 
-        var colladaScene = CubicVR.loadCollada("assets/models/sportscar/car1.dae", "assets/models/sportscar/");
-        var carMesh = colladaScene.getSceneObject("car1").obj;           // need to know it's name in the default scene
-        var car = new CubicVR.SceneObject({                            // SceneObject container for the mesh
+        /* Importing a model in XML format */
+
+        var shipMesh = new CubicVR.loadMesh("assets/models/starship/ship-main.xml");
+        shipMesh.clean();
+
+        var shipObject = new CubicVR.SceneObject({
             name : 'car',
-            mesh : carMesh,
-            position: [ 0.0, 0.015, 0.0 ],
+            mesh : shipMesh,
+            position : [ 0, 0, 0 ],
+            rotation : [ 0, 180, 0 ],
             scale : [ 0.1, 0.1, 0.1 ]
         });
-        scene.bindSceneObject(car);
 
+        scene.bind(shipObject);
 
         // Camera resizable with enabled controls
         CubicVR.addResizeable(scene.camera);
 
+
+        /* Movement variables */
+
         var rot = 0;
         var moving  = 0;
         var turning = 0;
-        var kbd = CubicVR.keyboard;
+        var speedMod = 15;
+
+
+        /* Configuring ship controls */
 
         var mvc = new CubicVR.MouseViewController(canvas, scene.camera);
 
         mvc.bindEvent('keyDown', function(ctx, mpos, keyCode, keyState) {
+
+            var kbd = CubicVR.keyboard;
 
             if (keyCode === kbd.UP_ARROW) {
                 moving = 1;
@@ -102,10 +87,11 @@
                 turning = -1;
             }
 
-            //return true;
         });
 
         mvc.bindEvent('keyUp', function(ctx, mpos, keyCode, keyState) {
+
+            var kbd = CubicVR.keyboard;
 
             if (keyCode === kbd.UP_ARROW || keyCode === kbd.DOWN_ARROW) {
                 moving = 0;
@@ -114,23 +100,17 @@
                 turning = 0;
             }
 
-            //return true;
         });
 
 
-        scene.setSkyBox(new CubicVR.SkyBox({
-            texture : 'assets/textures/skybox.jpg'
-        }));
-
+        /* Main Animation Loop */
 
         CubicVR.MainLoop(function(timer, gl) {
 
             var car = scene.getSceneObject('car');
 
-            scene.render();
-
             if (moving) {
-                var move  = moving / 30;
+                var move  = moving / speedMod;
                 var angle = rot * Math.PI / 180;
                 car.x += move * Math.sin(angle);
                 car.z += move * Math.cos(angle);
@@ -143,6 +123,7 @@
             }
 
             scene.camera.target = [ car.x, car.y, car.z ];
+            scene.render();
 
         });
 
