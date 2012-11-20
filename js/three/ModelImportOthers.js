@@ -67,6 +67,19 @@ function init() {
         });      
 }
 
+	// Model import others
+	var loader = new THREE.ColladaLoader();
+	loader.options.convertUpAxis = true;
+	loader.load( '../../assets/models/duck/duck.dae',function colladaReady( collada ) {
+	
+	duck = collada.scene;
+	geo = collada.scene.children[ 0 ].geometry;
+	mat = collada.scene.children[ 0 ].material;
+	
+	duck.scale.set(10.0, 10.0, 10.0);
+	duck.updateMatrix();
+	scene.add(duck);
+	});
 
 function animate() {
     requestAnimationFrame( animate );
