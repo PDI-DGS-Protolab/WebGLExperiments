@@ -87,6 +87,7 @@ function importModel(){
 	mat = collada.scene.children[ 0 ].material;
 	
 	duck.scale.set(5, 5, 5);
+	duck.position.set(0, -300, 0);
 	duck.updateMatrix();
 	scene.add(duck);
 	});
