@@ -1,6 +1,6 @@
 
 var camera, scene, renderer;
-
+var model;
 
 init();
 animate();
@@ -54,7 +54,9 @@ function init() {
     
 
 	// Model import others
-	model = importModel();
+	importModelCollada();
+	
+	camera.lookAt(model.position);
 
 }
 
@@ -77,18 +79,15 @@ function setControls (camera){
     controls.maxDistance = 50000;
 }
 
-function importModel(){
+function importModelCollada(){
 	var loader = new THREE.ColladaLoader();
 	loader.options.convertUpAxis = true;
 	loader.load( '../../assets/models/duck/duck.dae',function colladaReady( collada ) {
 	
-	duck = collada.scene;
-	geo = collada.scene.children[ 0 ].geometry;
-	mat = collada.scene.children[ 0 ].material;
+	model = collada.scene;
 	
-	duck.scale.set(5, 5, 5);
-	duck.position.set(0, -300, 0);
-	duck.updateMatrix();
-	scene.add(duck);
+	model.scale.set(5, 5, 5);
+	model.updateMatrix();
+	scene.add(model);
 	});
 }
