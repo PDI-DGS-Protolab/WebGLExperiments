@@ -55,8 +55,6 @@ function init() {
 
 	// Model import others
 	importModelCollada();
-	
-	camera.lookAt(model.position);
 
 }
 
@@ -89,5 +87,6 @@ function importModelCollada(){
 	model.scale.set(5, 5, 5);
 	model.updateMatrix();
 	scene.add(model);
+	camera.lookAt(model.position);
 	});
 }
