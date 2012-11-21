@@ -4,6 +4,7 @@ var speed = 5;
 var rotSpeed = 0.05;
 var m,r;
 var model;
+var lookAtModel = false;
 
 var config = {
 	SPEED : 5,
@@ -79,6 +80,11 @@ function init() {
     
     // Model controls
     setModelControls();
+    
+     // Camera follow
+     lookAtModel = true;
+     
+     // Camera chase
 
 }
 
@@ -91,6 +97,10 @@ function animate() {
     }
     if (r) {
     	model.rotation.y += rotSpeed;
+    }
+    
+    if (lookAtModel) {
+    	camera.lookAt(model.position);
     }
     
     render();
