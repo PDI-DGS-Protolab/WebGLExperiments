@@ -95,7 +95,7 @@ function animate() {
     	model.rotation.y += rotSpeed;
     }
     
-    if (lookAtModel) {
+    if (lookAtModel && model) {
     	camera.lookAt(model.position);
     }
     
