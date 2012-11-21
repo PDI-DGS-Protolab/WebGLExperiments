@@ -118,12 +118,12 @@ function setCameraControls ( camera ){
 function move( event ) {
 	
 	if ( (event.keyCode == keyCodes.UP_ARROW || event.keyCode == keyCodes.KEY_W) && !m ) {
-		speed = config.SPEED;
+		speed = -config.SPEED;
 		m = true;
 	}
 	
 	if ( (event.keyCode == keyCodes.DOWN_ARROW || event.keyCode == keyCodes.KEY_S) && !m ) {
-		speed = -config.SPEED;
+		speed = config.SPEED;
 		m = true;
 	}
 	
@@ -165,16 +165,13 @@ function setModelControls() {
 }
 
 function importModelJSON () {
-	var model;
 	var loader = new THREE.JSONLoader();	
 	
 	var tex = THREE.ImageUtils.loadTexture('../../assets/textures/Wolf_Diffuse_256x256.jpg', null, function () {
         var mat = new THREE.MeshBasicMaterial({ map: tex, morphTargets: true });
         loader.load('../../assets/models/Wolf.js', function (geo) {
         	model = new THREE.Mesh(geo, mat);
-            model.scale.set(20, 20, 20);
             scene.add(model);
     	});
 	});
-	return model;
 }
