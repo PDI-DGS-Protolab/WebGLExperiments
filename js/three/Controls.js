@@ -74,11 +74,11 @@ function init() {
     
         
     // Camera controls
-    setCameraControls ( camera );
-    
+    setCameraControls( camera );
+   
     
     // Model controls
-    setModelControls ();
+    setModelControls();
 
 }
 
