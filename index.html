@@ -30,6 +30,26 @@
 
 
 <body>
+    <style>
+        #modal {
+            position: absolute;
+            bottom: 3%;
+            right: 5%;
+            width: 350px;
+            height: 110px;
+            opacity: 0.85;
+            z-index: 20000;
+            background: white;
+            border-radius: 4px;
+            padding: 20px;
+            display : none;
+        }
+    </style>
+
+    <div id="modal">
+        <h2 class="headline"></h2>
+        <p class="details"></p>
+    </div>
 
         <div id="wrapper">
 
@@ -76,10 +96,14 @@
     <script type="text/javascript" src="js/lib/webgl/Three.js"></script>
     <script type="text/javascript" src="js/lib/webgl/Jax.js"></script>
 
-    <!--script type="text/javascript" src="js/cubic/setup.js"></script-->                <!-- Cubic -->
-    <!--script type="text/javascript" src="js/cubic/models.js"></script-->
+                                                                                    <!-- Cubic -->
+<!--
+    <script type="text/javascript" src="js/cubic/setup.js"></script>
+    <script type="text/javascript" src="js/cubic/models.js"></script>
     <script type="text/javascript" src="js/cubic/controls.js"></script>
     <script type="text/javascript" src="js/cubic/collisions.js"></script>
+-->
+    <script type="text/javascript" src="js/cubic/lights.js"></script>
 
     <script type="text/javascript" src="js/three/setup.js"></script>                <!-- Three -->
     <script type="text/javascript" src="js/three/controls.js"></script>
