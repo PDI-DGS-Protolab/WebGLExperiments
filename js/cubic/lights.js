@@ -27,21 +27,23 @@
     }
 */
 
-    //var tex = new CubicVR.Texture('')
 
 
         var scene = new CubicVR.Scene({
 
-            lights : [
 /*
-                {
-                    name      : "point",
-                    type      : CubicVR.enums.light.type.POINT,
-                    position  : [ 0.0, 3.0, 0.0 ],
-                    distance  : 15
-                }
+            lights : [
 
-                ,
+                {
+                    type:"spot_shadow",
+                    position : [ 12.0, 1.0, 12.0 ],
+                    intensity:1,
+                    distance:100,
+                    map_res:1024,
+                    cutoff:90
+                }
+                */
+/*
                 {
                     name     : "area",
                     type     : "area",
@@ -51,7 +53,7 @@
                     areaFloor: -40,
                     areaAxis: [25.0, 5] // specified in degrees east/west north/south
                 },
-*/
+
 
                 {
                     name: "spot_shadow",
@@ -65,6 +67,7 @@
                 }
 
             ],
+*/
 
 
             camera : {
@@ -77,24 +80,10 @@
             },
 
             sceneObjects : [
-                {                            // SceneObject container for the mesh
+                {
                     name : 'duck',
                     mesh : CubicVR.loadCollada("assets/models/duck/duck.dae", "assets/models/duck/").getSceneObject("LOD3sp").obj,
                     position: [ 0.0, 0.0, 0.0 ],
-                    scale : [ 0.01, 0.01, 0.01 ]
-                },
-
-                {                            // SceneObject container for the mesh
-                    name : 'duck2',
-                    mesh : CubicVR.loadCollada("assets/models/duck/duck.dae", "assets/models/duck/").getSceneObject("LOD3sp").obj,
-                    position: [ 12.0, 0.0, 12.0 ],
-                    scale : [ 0.01, 0.01, 0.01 ]
-                },
-
-                {                            // SceneObject container for the mesh
-                    name : 'duck3',
-                    mesh : CubicVR.loadCollada("assets/models/duck/duck.dae", "assets/models/duck/").getSceneObject("LOD3sp").obj,
-                    position: [ -24.0, 0.0, -24.0 ],
                     scale : [ 0.01, 0.01, 0.01 ]
                 }
 
@@ -104,19 +93,87 @@
 
         });
 
-        var l = new CubicVR.Light({
-            name      : "spot_shadow",
-            type      : CubicVR.enums.light.type.SPOT_SHADOW,
-            position  : [ -24.0, 3.0, -24.0 ],
-            intensity : 3,
-            distance: 200,
-            map_res: 1024,
-            cutoff: 25
-        });
+        var duck = scene.getSceneObject( 'duck' );
 
-        l.setParent( scene.getSceneObject('duck3') );
-        scene.bind(l);
 
+        var points = function () {
+
+            var pos = [
+                [  3.0, 0.0,  0.0 ],
+                [  0.0, 0.0, -3.0 ],
+                [ -3.0, 0.0,  0.0 ],
+                [  0.0, 0.0,  3.0 ]
+            ];
+
+            var diffuse = [
+                [ 255.0, 0.0, 0.0 ],
+                [ 0.0,   255.0, 0.0 ],
+                [ 0.0,   0.0, 255.0 ],
+                [ 70.0,   70.0, 70.0 ]
+            ];
+
+            for (var i = 0; i < pos.length; i++) {
+
+                var l = new CubicVR.Light({
+                    name     : "point" + i,
+                    type     : "point",
+                    position : pos[i],
+                    diffuse  : diffuse[i],
+                    distance : 15
+                });
+
+                scene.bind(l);
+            }
+
+        };
+
+
+        var directionals = function () {
+
+            var dir = [
+                [ 0.0, -1.0, 0.0 ],
+                [ 0.0,  1.0, 0.0 ]
+            ];
+
+            for (var i = 0; i < dir.length; i++) {
+
+                var l = new CubicVR.Light({
+                    name      : "directional" + i,
+                    type      : "directional",
+                    direction : dir[i]
+                });
+
+                scene.bind(l);
+            }
+        };
+
+
+        var spots = function () {
+
+            var pos = [
+                [  3.0, 0.0, 3.0 ],
+                [ -3.0, 0.0, -3.0 ]
+            ];
+
+            for (var i = 0; i < pos.length; i++) {
+
+                var l = new CubicVR.Light({
+                    name      : "spot" + i,
+                    type      : "spot",
+                    position  : pos[i],
+                    diffuse: [1,1,1],
+                    specular: [1,1,1],
+                    cutoff   : 90.0,
+                    direction : [ 0.0, 1.0, 0.0],
+                    distance : 10
+
+                });
+
+                l.lookat( duck.pos );
+
+            }
+
+        };
 
 
         var current = 0;
@@ -131,16 +188,18 @@
         headline.text( headlinesA[current] );
         details.text( detailsA[current] );
 
+
         var mvc = new CubicVR.MouseViewController(canvas, scene.camera);
 
         mvc.bindEvent('keyPress', function(ctx, mpos, keyCode, keyState) {
 
-            if ( keyCode === CubicVR.keyboard.ENTER ) {
-                current = (current + 1) % 3;
+            var lights = [ points, directionals, spots ];
 
-                var duck = scene.sceneObjects[current];
-                scene.camera.target   = [ duck.x, duck.y, duck.z ];
-                scene.camera.position = [ duck.x + 5, duck.y + 5 , duck.z + 5 ];
+            if ( keyCode === CubicVR.keyboard.ENTER ) {
+                current = (current + 1) % lights.length;
+
+                scene.lights = [];
+                lights[ current ]();
 
                 headline.text( headlinesA[current] );
                 details.text( detailsA[current] );
@@ -148,19 +207,98 @@
 
         });
 
+
         CubicVR.MainLoop(function(timer, gl) {
 
-            var ducks = [ 'duck', 'duck2', 'duck3' ];
+            var time = Date.now() * 0.0005;
 
-            for (var i = ducks.length - 1; i >= 0; i--) {
-                var duck = scene.getSceneObject( ducks[i] );
-                duck.rotY += 1;
+            duck.rotY += 1;
+
+            for (var i = 0; i < scene.lights.length; i++) {
+                var light = scene.lights[i];
+                light.pos = [
+                    Math.sin( time * 0.7 * i / 4) * 10,
+                    Math.cos( time * 0.5 * i / 4) * 10,
+                    Math.cos( time * 0.3 * i / 4) * 10
+                ];
+/*
+                switch ( current ) {
+                    case 0 : light.pos = [
+                                Math.sin( time * 0.7 * i / 4) * 10,
+                                Math.cos( time * 0.5 * i / 4) * 10,
+                                Math.cos( time * 0.3 * i / 4) * 10
+                             ];
+                             break;
+                    case 1 :light.setDirection(
+                                Math.sin( time * 0.7 * i / 4),
+                                Math.cos( time * 0.5 * i / 4),
+                                Math.cos( time * 0.3 * i / 4)
+                            );
+                            break;
+
+                    case 2 : //lights.
+                                break;
+                    //case 3 :
+                                //break;
+                }
+                */
             }
 
+
+
+
+/*
+            scene.lights[0].pos = [
+                            Math.sin( time * 0.7 * 1 / 4) * 10,
+                            Math.cos( time * 0.5 * 1 / 4) * 10,
+                            Math.cos( time * 0.3 * 1 / 4) * 10
+                        ];
+
+scene.lights[1].pos = [
+                            Math.sin( time * 0.7 * 2 / 4) * 10,
+                            Math.cos( time * 0.5 * 2 / 4) * 10,
+                            Math.cos( time * 0.3 * 2 / 4) * 10
+                        ];
+                        */
+//scene.lights[0].box.pos = scene.lights[0].position;
+//scene.lights[1].box.pos = scene.lights[1].position;
+            //if ( current != 2 ) {
+                    /*
+                for (var i = 0; i < scene.lights.length; i++) {
+                    (function(j) {
+                        var i = j;
+                        if ( current == 2) {
+                        var light = scene.lights[i];
+                        light.pos = [
+                            Math.sin( time * 0.7 * i / 4) * 10,
+                            Math.cos( time * 0.5 * i / 4) * 10,
+                            Math.cos( time * 0.3 * i / 4) * 10
+                        ];
+
+                            light.box.pos = light.pos;
+                            var sec = timer.getSeconds();
+                            if ( sec < 5.0 ) {
+                            console.log( scene.lights[0].box.pos );
+                            console.log( scene.lights[1].box.pos );
+                            }
+
+                        }
+                    })(i);
+                }
+*/
+            /*
+            }
+            else {
+                console.log( scene.lights[0].pos );
+            }
+            */
 
             scene.render();
 
         });
+
+
+        points();
 
     }
 
