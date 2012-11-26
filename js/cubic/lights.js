@@ -151,8 +151,8 @@
         var spots = function () {
 
             var pos = [
-                [  3.0, 0.0, 3.0 ],
-                [ -3.0, 0.0, -3.0 ]
+                [  10.0, 0.0,  10.0 ],
+                [ -10.0, 0.0, -10.0 ]
             ];
 
             for (var i = 0; i < pos.length; i++) {
@@ -165,14 +165,25 @@
                     specular: [1,1,1],
                     cutoff   : 90.0,
                     direction : [ 0.0, 1.0, 0.0],
-                    distance : 10
+                    distance : 20,
+                    intensity : 4
 
                 });
 
                 l.lookat( duck.pos );
-
+                scene.bind(l);
             }
 
+        };
+
+
+        var area = function () {
+            var l = new CubicVR.Light({
+                name : "area",
+                type : "area"
+            });
+
+            scene.bind(l);
         };
 
 
@@ -182,8 +193,8 @@
         var headline = modal.find('.headline');
         var details  = modal.find('.details');
 
-        var headlinesA = [ 'Point Light', 'Directional Light', 'Spot Light' ];
-        var detailsA = [ 'With diffuse and specular modifiers', '', '' ];
+        var headlinesA = [ 'Point Light', 'Directional Light', 'Spot Light', 'Ambient Light' ];
+        var detailsA = [ 'with diffuse and specular modifiers', '', '', '' ];
 
         headline.text( headlinesA[current] );
         details.text( detailsA[current] );
@@ -193,7 +204,7 @@
 
         mvc.bindEvent('keyPress', function(ctx, mpos, keyCode, keyState) {
 
-            var lights = [ points, directionals, spots ];
+            var lights = [ points, directionals, spots, area ];
 
             if ( keyCode === CubicVR.keyboard.ENTER ) {
                 current = (current + 1) % lights.length;
@@ -208,95 +219,46 @@
         });
 
 
-        CubicVR.MainLoop(function(timer, gl) {
+        function changeLight( pos ) {
 
+            var i = pos;
+            var light = scene.lights[i];
             var time = Date.now() * 0.0005;
+
+            switch ( current ) {
+                case 0 : light.pos = [
+                            Math.sin( time * 0.7 * (i+1) / 4) * 10,
+                            Math.cos( time * 0.5 * (i+1) / 4) * 10,
+                            Math.cos( time * 0.3 * (i+1) / 4) * 10
+                         ];
+                         break;
+                case 1 :
+                case 2 :
+                        light.setDirection(
+                            Math.sin( time * 0.7 * (i+1) / 4),
+                            Math.cos( time * 0.5 * (i+1) / 4),
+                            Math.cos( time * 0.3 * (i+1) / 4)
+                        );
+                        break;
+            }
+
+        }
+
+
+        CubicVR.MainLoop(function(timer, gl) {
 
             duck.rotY += 1;
 
             for (var i = 0; i < scene.lights.length; i++) {
-                var light = scene.lights[i];
-                light.pos = [
-                    Math.sin( time * 0.7 * i / 4) * 10,
-                    Math.cos( time * 0.5 * i / 4) * 10,
-                    Math.cos( time * 0.3 * i / 4) * 10
-                ];
-/*
-                switch ( current ) {
-                    case 0 : light.pos = [
-                                Math.sin( time * 0.7 * i / 4) * 10,
-                                Math.cos( time * 0.5 * i / 4) * 10,
-                                Math.cos( time * 0.3 * i / 4) * 10
-                             ];
-                             break;
-                    case 1 :light.setDirection(
-                                Math.sin( time * 0.7 * i / 4),
-                                Math.cos( time * 0.5 * i / 4),
-                                Math.cos( time * 0.3 * i / 4)
-                            );
-                            break;
-
-                    case 2 : //lights.
-                                break;
-                    //case 3 :
-                                //break;
-                }
-                */
+                changeLight( i );
             }
-
-
-
-
-/*
-            scene.lights[0].pos = [
-                            Math.sin( time * 0.7 * 1 / 4) * 10,
-                            Math.cos( time * 0.5 * 1 / 4) * 10,
-                            Math.cos( time * 0.3 * 1 / 4) * 10
-                        ];
-
-scene.lights[1].pos = [
-                            Math.sin( time * 0.7 * 2 / 4) * 10,
-                            Math.cos( time * 0.5 * 2 / 4) * 10,
-                            Math.cos( time * 0.3 * 2 / 4) * 10
-                        ];
-                        */
-//scene.lights[0].box.pos = scene.lights[0].position;
-//scene.lights[1].box.pos = scene.lights[1].position;
-            //if ( current != 2 ) {
-                    /*
-                for (var i = 0; i < scene.lights.length; i++) {
-                    (function(j) {
-                        var i = j;
-                        if ( current == 2) {
-                        var light = scene.lights[i];
-                        light.pos = [
-                            Math.sin( time * 0.7 * i / 4) * 10,
-                            Math.cos( time * 0.5 * i / 4) * 10,
-                            Math.cos( time * 0.3 * i / 4) * 10
-                        ];
-
-                            light.box.pos = light.pos;
-                            var sec = timer.getSeconds();
-                            if ( sec < 5.0 ) {
-                            console.log( scene.lights[0].box.pos );
-                            console.log( scene.lights[1].box.pos );
-                            }
-
-                        }
-                    })(i);
-                }
-*/
-            /*
-            }
-            else {
-                console.log( scene.lights[0].pos );
-            }
-            */
 
             scene.render();
 
         });
 
+
+        // Initialization
 
         points();
 
