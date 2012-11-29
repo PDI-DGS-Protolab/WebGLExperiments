@@ -39,14 +39,12 @@
 
                     compile : true
                 }
-            }
+            },
+
+            skybox : new CubicVR.SkyBox({ texture : '../assets/textures/skybox.jpg' })
         });
 
         CubicVR.addResizeable(scene.camera);
-
-        scene.setSkyBox(new CubicVR.SkyBox({
-            texture : 'assets/textures/skybox.jpg'
-        }));
 
         CubicVR.MainLoop(function(timer, gl) {
             scene.render();
