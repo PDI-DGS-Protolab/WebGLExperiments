@@ -6,30 +6,46 @@
     var listItems = $('.item');
     var buttons   = $('.btn');
 
-    var framework = '';
+    var framework = buttons.eq(0).addClass('active').text().toLowerCase();
 
 
     /* Auxiliary Function */
 
-    var loadTest = function ( script ) {
+    var loadIframe = function( iframe, test ) {
 
-        // Removing the old canvas
-        var canvas = $('#canvas');
-        canvas.remove();
+        iframe = iframe[0];
 
-        // Creating a new one, added to the webpage
-        canvas = $('<canvas id="canvas"></canvas>');
-        $('#visual').append( canvas );
+        var path = '../js/'  + framework + '/';
 
-        // Canvas resized
-        var c = canvas[0];
-        c.width  = canvas.parent().width();
-        c.height = canvas.parent().height() - $('.header').height();
+        var js   = path + test + '.js';
+        var script= document.createElement('script');
+        script.type= 'text/javascript';
+        script.src= js;
 
-        // Launch the new test
-        var str = '<script type="text/javascript" src="' + script + '"></script>';
-        var dom = $(str);
-        $('body').append( str );
+
+        var bodyiframe = iframe.contentDocument.body;
+        bodyiframe.appendChild( script );
+
+    };
+
+
+    var loadTest = function ( test, callback ) {
+
+        var iframe = $('iframe');
+        iframe.attr({ 'src' : 'html/iframe.html' });
+
+        setTimeout(function() {
+            callback(iframe, test);
+        }, 200);
+
+
+    };
+
+
+    var getNameTest = function ( test ) {
+        var nameTest = test.find('a').attr('href');
+        nameTest = nameTest.slice( 1, nameTest.length );
+        return nameTest;
     };
 
 
@@ -39,19 +55,14 @@
 
         event.preventDefault();
 
-        if ( ! framework ) {
-            showAlert();
+        var num = $(this).prevAll().length;
 
-        } else {
-            var num = $(this).prevAll().length;
-            var test = [ 'setup', 'models-json', 'models-collada', 'controls', 'lights', 'collisions' ];
+        listItems.removeClass('active');
+        var test = listItems.eq(num).addClass('active');
 
-            var currentTest = test[ num ];
-            var path = 'js/' + framework + '/';
-            var script  = window.location.href + path + currentTest + '.js';
+        var nameTest = getNameTest( test );
 
-            loadTest( script );
-        }
+        loadTest( nameTest, loadIframe );
 
     };
 
@@ -64,9 +75,15 @@
         var f = b.text();
         framework = f.toLowerCase();
 
+        var test = listItems.filter(function(i) {
+            return listItems.eq(i).hasClass('active');
+        });
+
+        var nameTest = getNameTest( test );
+        loadTest( nameTest, loadIframe );
     };
 
-
+    /*
     var showAlert = function ( opt ) {
 
         var alert = $('.alert');
@@ -79,20 +96,10 @@
             }, TIME);
         }
 
-        /*
-        alerts.filter(function(a) {
-            return a.hasClass('alert')
-
-        })
-        switch (op) {
-            case AL.WARNING : break;
-            case AL.ERROR   : break;
-            case AL.INFO    : break;
-            default :
-        }
-        */
-
     };
+    */
+    var name = getNameTest( listItems.first() );
+    loadTest( name, loadIframe );
 
 
     /* Event Assignments */

@@ -41,6 +41,7 @@ img, figure {
    border  : 0;
 }
 
+iframe { border : 0; }
 
 /* Layout */
 
@@ -88,14 +89,19 @@ img, figure {
 .grey { background : grey; }
 
 .padding {
-    padding : 30px 20px;
+    padding : 40px 20px;
 }
 
 .aside {
     background: whitesmoke;
     border-right : 1px solid #E5E5E5;
 }
-.nav-list { padding : 0; }
+
+
+.nav-list {
+  padding : 0;
+  padding-top: 20px;
+}
 
 .item {
     display : block;
