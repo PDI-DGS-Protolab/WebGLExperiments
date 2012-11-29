@@ -10,65 +10,7 @@
 
         /* Creating a new scene */
 
-/*
-    enums.light = {
-        type: {
-            NULL: 0,
-            POINT: 1,
-            DIRECTIONAL: 2,
-            SPOT: 3,
-            AREA: 4,
-            DEPTH_PACK: 5,
-            // this lets us pass the shadow stage in as a light definition
-            SPOT_SHADOW: 6,
-            SPOT_SHADOW_PROJECTOR: 7,
-            MAX: 8
-        }
-    }
-*/
-
-
-
         var scene = new CubicVR.Scene({
-
-/*
-            lights : [
-
-                {
-                    type:"spot_shadow",
-                    position : [ 12.0, 1.0, 12.0 ],
-                    intensity:1,
-                    distance:100,
-                    map_res:1024,
-                    cutoff:90
-                }
-                */
-/*
-                {
-                    name     : "area",
-                    type     : "area",
-                    position : [ 0.0, -10.0, 0.0 ],
-                    intensity : 0.01,
-                    areaCeiling: 40,
-                    areaFloor: -40,
-                    areaAxis: [25.0, 5] // specified in degrees east/west north/south
-                },
-
-
-                {
-                    name: "spot_shadow",
-                    type: "spot_shadow",
-                    position  : [ -24.0, 3.0, -24.0 ],
-                    target    : [ -24.0, 0.0, -24.0 ],
-                    intensity: 0.6,
-                    distance: 200,
-                    map_res: 1024,
-                    cutoff: 25
-                }
-
-            ],
-*/
-
 
             camera : {
                 name     : "camera",
@@ -93,7 +35,7 @@
 
         });
 
-        var duck = scene.getSceneObject( 'duck' );
+        var duck = scene.getSceneObject('duck');
 
 
         var points = function () {
@@ -265,7 +207,7 @@
     }
 
 
-    CubicVR.start('auto', webGLStart);
+    CubicVR.start('#canvas', webGLStart);
 
 
 })( CubicVR, jQuery );

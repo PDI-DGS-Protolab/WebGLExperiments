@@ -66,7 +66,7 @@
     }
 
 
-    CubicVR.start('auto', webGLStart);
+    CubicVR.start('#canvas', webGLStart);
 
 
 })( CubicVR );
