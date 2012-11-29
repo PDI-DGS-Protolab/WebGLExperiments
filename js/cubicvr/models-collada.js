@@ -32,7 +32,7 @@
 
         // Collada model imported
 
-        var colladaScene = CubicVR.loadCollada("assets/duck/duck.dae", "assets/duck/");
+        var colladaScene = CubicVR.loadCollada("../assets/models/duck/duck.dae", "../assets/models/duck/");
         var duckMesh = colladaScene.getSceneObject("LOD3sp").obj;           // need to know it's name in the default scene
         var duck = new CubicVR.SceneObject({                            // SceneObject container for the mesh
             name : 'duck',
@@ -49,7 +49,7 @@
 
 
         scene.setSkyBox(new CubicVR.SkyBox({
-            texture : 'assets/textures/skybox.jpg'
+            texture : '../assets/textures/skybox.jpg'
         }));
 
 
@@ -60,7 +60,7 @@
     }
 
 
-    CubicVR.start('#canvas', webGLStart);
+    CubicVR.start('auto', webGLStart);
 
 
 })( CubicVR );

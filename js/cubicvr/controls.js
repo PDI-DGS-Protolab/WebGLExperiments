@@ -34,13 +34,13 @@
         });
 
         scene.setSkyBox(new CubicVR.SkyBox({
-            texture : 'assets/textures/skybox.jpg'
+            texture : '../assets/textures/skybox.jpg'
         }));
 
 
         /* Importing a model in XML format */
 
-        var shipMesh = new CubicVR.loadMesh("assets/models/starship/ship-main.xml");
+        var shipMesh = new CubicVR.loadMesh("../assets/models/starship/ship-main.json");
         shipMesh.clean();
 
         var shipObject = new CubicVR.SceneObject({
@@ -130,7 +130,7 @@
     }
 
 
-    CubicVR.start('#canvas', webGLStart);
+    CubicVR.start('auto', webGLStart);
 
 
 })( CubicVR );

@@ -24,14 +24,14 @@
             sceneObjects : [
                 {
                     name : 'duck',
-                    mesh : CubicVR.loadCollada("assets/models/duck/duck.dae", "assets/models/duck/").getSceneObject("LOD3sp").obj,
+                    mesh : CubicVR.loadCollada("../assets/models/duck/duck.dae", "../assets/models/duck/").getSceneObject("LOD3sp").obj,
                     position: [ 0.0, 0.0, 0.0 ],
                     scale : [ 0.01, 0.01, 0.01 ]
                 }
 
             ],
 
-            skybox : new CubicVR.SkyBox({ texture : 'assets/textures/skybox.jpg' })
+            skybox : new CubicVR.SkyBox({ texture : '../assets/textures/skybox.jpg' })
 
         });
 
@@ -207,7 +207,7 @@
     }
 
 
-    CubicVR.start('#canvas', webGLStart);
+    CubicVR.start('auto', webGLStart);
 
 
 })( CubicVR, jQuery );
