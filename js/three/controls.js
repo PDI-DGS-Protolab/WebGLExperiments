@@ -27,22 +27,21 @@ animate();
 
 function init() {
 	
-	// Canvas
-	canvas = $('canvas').get(0);
-	
 	// Renderer
-    renderer = new THREE.WebGLRenderer({ antialias: true, canvas : canvas });
-    renderer.setSize( canvas.width, canvas.height );
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    document.body.appendChild( renderer.domElement );
+
     
     // Scene
     scene = new THREE.Scene();
 	
 	// Camera
-    camera = new THREE.PerspectiveCamera( 75, canvas.width / canvas.height, 0.1, 200000 );
+    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 200000 );
     camera.position.z = 2000;
     
     // Skybox
-    var urlPrefix	= "../../assets/textures";
+    var urlPrefix	= "../assets/textures";
 	var urls = [ urlPrefix + "/skybox1.jpg", urlPrefix + "/skybox3.jpg",
 			urlPrefix + "/skybox5.jpg", urlPrefix + "/skybox4.jpg",
 			urlPrefix + "/skybox2.jpg", urlPrefix + "/skybox6.jpg" ];
