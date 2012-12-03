@@ -1,0 +1,101 @@
+{
+    root: {
+        header: {
+            type: {
+                $: "mesh"
+            },
+            version: {
+                $: "0.1"
+            },
+            name: {
+                $: "<Nombre del mesh>"
+            },
+            generator: {
+                $: "lwo2xml"
+            }
+        },
+        properties: {
+            points: {
+                $: {a,b,c d,e,f g,h,i}                  #siendo a,b,c... las coordenadas y entre un punto y otro separados por un espacio en lugar de una coma
+            },
+            material: [{
+                name{
+                    $: "< nombre de la textura >"
+                },
+                color{
+                    $: "r,g,b"                          # valores RGB separados por coma
+                },
+                alpha{
+                    $: "a"                              # Valor del canal alpha
+                },
+                ambient{
+                    $: "a,b,c"                          # Valor de la luz ambiente
+                },
+                diffuse{
+                    $: "a,b,c"                          # Valor de diffuse de la luz reflejada
+                },
+                specular{
+                    $: "a,b,c"                          # Valor de specular de la luz reflejada
+                },
+                shininess{
+                    $: "a"                              # Valor del brillo de la luz reflejada
+                },
+                max_smooth{
+                    $: "a"                              # ???
+                },
+                segments{
+                    $: "a,b"                            # ???
+                },
+                triangles{
+                    $: "a,b,c,d,e,f,g,h,,i,j......."    # ???
+                }
+            },
+            {
+                name{
+                    $: "< nombre de la textura 2 >"
+                },
+                color{
+                    $: "r,g,b"                          # valores RGB separados por coma
+                },
+                alpha{
+                    $: "a"                              # Valor del canal alpha
+                },
+                ambient{
+                    $: "a,b,c"                          # Valor de la luz ambiente
+                },
+                diffuse{
+                    $: "a,b,c"                          # Valor de diffuse de la luz reflejada
+                },
+                specular{
+                    $: "a,b,c"                          # Valor de specular de la luz reflejada
+                },
+                shininess{
+                    $: "a"                              # Valor del brillo de la luz reflejada
+                },
+                max_smooth{
+                    $: "a"                              # ???
+                },
+                segments{
+                    $: "a,b"                            # ???
+                },
+                triangles{
+                    $: "a,b,c,d,e,f,g,h,,i,j......."    # ???
+                },
+                texture: {
+                    $: "< path/to/texture >"            # path to file containing the texture
+                },
+                texture_luminosity: {
+                    $: "< path/to/luminosity/map >"     # path to file containing the luminosity map
+                },
+                uvmapper: {
+                    type: {
+                        $: "uv"
+                    },
+                    uv: {
+                        $: "a,b c,d e,f g,h........"    # list of space-separated pairs defining the uv's
+                    }
+                }
+            }
+        }
+    }
+}

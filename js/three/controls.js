@@ -9,7 +9,7 @@ var lookAtModel = false;
 var config = {
 	SPEED : 5,
 	ROTSPEED : 0.05
-}
+};
 
 var keyCodes = {
       LEFT_ARROW: 37,
@@ -19,33 +19,34 @@ var keyCodes = {
       KEY_A: 65,
       KEY_D: 68,
       KEY_S: 83,
-      KEY_W: 87,
-     }
+      KEY_W: 87
+};
 
 init();
 animate();
 
 function init() {
-	
+
 	// Renderer
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
 
-    
+
     // Scene
     scene = new THREE.Scene();
-	
+
 	// Camera
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 200000 );
-    camera.position.z = 2000;
-    
+    camera.position.y = 30;
+    camera.position.z = -100;
+
     // Skybox
     var urlPrefix	= "../assets/textures";
 	var urls = [ urlPrefix + "/skybox1.jpg", urlPrefix + "/skybox3.jpg",
 			urlPrefix + "/skybox5.jpg", urlPrefix + "/skybox4.jpg",
 			urlPrefix + "/skybox2.jpg", urlPrefix + "/skybox6.jpg" ];
-			
+
 	var textureCube	= THREE.ImageUtils.loadTextureCube( urls );
 
 	var shader	= THREE.ShaderUtils.lib["cube"];
@@ -60,50 +61,45 @@ function init() {
 	skyboxMesh	= new THREE.Mesh( new THREE.CubeGeometry( 100000, 100000, 100000, 1, 1, 1, null, true ), material );
 
 	scene.add( skyboxMesh );
-	
+
     // Light
     var light = new THREE.PointLight( 0xffffff );
 	light.position.set( -250, 250, -250 );
 	scene.add(light);
-    
-    // Object
-    var geometry = new THREE.CubeGeometry( 50, 50, 50 );
-    var material = new THREE.MeshLambertMaterial();
-    model = new THREE.Mesh( geometry, material );
-    scene.add( model );
-    
-        
+
+
     // Camera controls
     setCameraControls( camera );
-   
-    
+
+
     // Model controls
     setModelControls();
-    
-     // Camera follow
-     lookAtModel = true;
-     
-     // Camera chase
+
+
+    importModelJSON();
+
+    // Camera follow
+    lookAtModel = true;
 
 }
 
 function animate() {
 	requestAnimationFrame( animate );
     controls.update();
-    
+
     if (m) {
-    	model.translateZ(speed);
+        model.translateZ(-speed);
     }
     if (r) {
-    	model.rotation.y += rotSpeed;
+        model.rotation.y += rotSpeed;
     }
-    
-    if (lookAtModel) {
-    	camera.lookAt(model.position);
+
+    if (lookAtModel && model) {
+        controls.target = model.position;
     }
-    
+
     render();
-    
+
 }
 
 
@@ -120,22 +116,22 @@ function setCameraControls ( camera ){
 
 
 function move( event ) {
-	
+
 	if ( (event.keyCode == keyCodes.UP_ARROW || event.keyCode == keyCodes.KEY_W) && !m ) {
 		speed = config.SPEED;
 		m = true;
 	}
-	
+
 	if ( (event.keyCode == keyCodes.DOWN_ARROW || event.keyCode == keyCodes.KEY_S) && !m ) {
 		speed = -config.SPEED;
 		m = true;
 	}
-	
+
 	if ( (event.keyCode == keyCodes.RIGHT_ARROW || event.keyCode == keyCodes.KEY_D) && !r ) {
 		rotSpeed = -config.ROTSPEED;
 		r = true;
 	}
-	
+
 	if ( (event.keyCode == keyCodes.LEFT_ARROW || event.keyCode == keyCodes.KEY_A) && !r ) {
 		rotSpeed = config.ROTSPEED;
 		r = true;
@@ -144,19 +140,19 @@ function move( event ) {
 
 
 function stop( event ) {
-	
+
 	if ( (event.keyCode == keyCodes.UP_ARROW || event.keyCode == keyCodes.KEY_W) && m ) {
 		m = false;
 	}
-	
+
 	if ( (event.keyCode == keyCodes.DOWN_ARROW || event.keyCode == keyCodes.KEY_S) && m ) {
 		m = false;
 	}
-	
+
 	if ( (event.keyCode == keyCodes.RIGHT_ARROW || event.keyCode == keyCodes.KEY_D) && r ) {
 		r = false;
 	}
-	
+
 	if ( (event.keyCode == keyCodes.LEFT_ARROW || event.keyCode == keyCodes.KEY_A) && r ) {
 		r = false;
 	}
@@ -164,6 +160,19 @@ function stop( event ) {
 
 
 function setModelControls() {
-	$(window).on('keydown', move);
-	$(window).on('keyup', stop);
+    window.parent.addEventListener('keydown', move, false);
+    window.parent.addEventListener('keyup', stop, false);
+}
+
+
+function importModelJSON () {
+    var loader = new THREE.JSONLoader();
+
+    var tex = THREE.ImageUtils.loadTexture("../assets/textures/Wolf_Diffuse_256x256.jpg", null, function () {
+        var mat = new THREE.MeshBasicMaterial({ map: tex, morphTargets: true });
+        loader.load("../assets/models/Wolf.js", function (geo) {
+            model = new THREE.Mesh(geo, mat);
+            scene.add(model);
+        });
+    });
 }

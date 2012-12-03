@@ -67,9 +67,7 @@
 
         /* Configuring ship controls */
 
-        var mvc = new CubicVR.MouseViewController(canvas, scene.camera);
-
-        mvc.bindEvent('keyDown', function(ctx, mpos, keyCode, keyState) {
+        var keyDownHandler = function (keyCode) {
 
             var kbd = CubicVR.keyboard;
 
@@ -87,9 +85,10 @@
                 turning = -1;
             }
 
-        });
+        };
 
-        mvc.bindEvent('keyUp', function(ctx, mpos, keyCode, keyState) {
+
+        var keyUpHandler = function ( keyCode ) {
 
             var kbd = CubicVR.keyboard;
 
@@ -100,7 +99,32 @@
                 turning = 0;
             }
 
+        };
+
+
+        var mvc = new CubicVR.MouseViewController(canvas, scene.camera);
+
+        mvc.bindEvent('keyDown', function(ctx, mpos, keyCode, keyState) {
+            keyDownHandler(keyCode);
         });
+
+        mvc.bindEvent('keyUp', function(ctx, mpos, keyCode, keyState) {
+            keyUpHandler(keyCode);
+        });
+
+
+        /* Key Handlers Hotfix (because this script will be runned inside of an iframe */
+
+        window.parent.addEventListener('keydown', function ( event ) {
+            keyDownHandler( event.which );
+
+        }, false);
+
+
+        window.parent.addEventListener('keyup', function ( event ) {
+            keyUpHandler( event.which );
+
+        }, false);
 
 
         /* Main Animation Loop */

@@ -69,20 +69,30 @@ iframe { border : 0; }
 
 
 .navbar { margin-bottom : 0; }
-    .navbar .title { padding : 0; }
+
     .navbar-inner { border-radius : 0; }
 
+    .navbar .title {
+        font-size: 20px;
+        font-weight: 200;
+        padding : 0;
+    }
+
+    .navbar .subtitle {
+        padding : 0;
+        font-size : 16px;
+    }
+
+
 .header {
-    box-shadow: -1px 1px 15px 0px #333;
+    box-shadow: -1px 1px 15px 0 #333;
     z-index: 10;
 }
 
 .footer {
-    background: red;
-    position : relative;
+    position : absolute;
     bottom : 0;
 }
-
 
 /* Theme */
 
