@@ -142,9 +142,7 @@
         details.text( detailsA[current] );
 
 
-        var mvc = new CubicVR.MouseViewController(canvas, scene.camera);
-
-        mvc.bindEvent('keyPress', function(ctx, mpos, keyCode, keyState) {
+        var keyPressHandler = function ( keyCode ) {
 
             var lights = [ points, directionals, spots, area ];
 
@@ -158,10 +156,25 @@
                 details.text( detailsA[current] );
             }
 
+        };
+
+
+        var mvc = new CubicVR.MouseViewController(canvas, scene.camera);
+
+        mvc.bindEvent('keyPress', function(ctx, mpos, keyCode, keyState) {
+            keyPressHandler( keyCode );
         });
 
 
-        function changeLight( pos ) {
+        /* Key Handlers Hotfix (because this script will be runned inside of an iframe */
+
+        window.parent.addEventListener('keypress', function ( event ) {
+            keyPressHandler( event.which );
+
+        }, false);
+
+
+        var changeLight = function ( pos ) {
 
             var i = pos;
             var light = scene.lights[i];
@@ -184,7 +197,7 @@
                         break;
             }
 
-        }
+        };
 
 
         CubicVR.MainLoop(function(timer, gl) {

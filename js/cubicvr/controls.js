@@ -113,6 +113,8 @@
         });
 
 
+        /* Key Handlers Hotfix (because this script will be runned inside of an iframe */
+
         window.parent.addEventListener('keydown', function ( event ) {
             keyDownHandler( event.which );
 
