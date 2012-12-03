@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Meta -->
+    <meta charset="UTF-8" />
+
+    <meta name="keywords"    content="" />
+    <meta name="description" content="" />
+    <meta name="robots"      content="noindex, nofollow" />
+
+    <meta property="og:type"        content="website" />
+    <meta property="og:title"       content="My title" />
+    <meta property="og:description" content="My description" />
+    <meta property="og:url"         content="URL" />
+    <meta property="og:image"       content="URL Image" />
+
+
+    <!-- Website Title -->
+    <title>WebGL Experiments</title>
+
+
+    <!-- CSS -->
+    <link type="text/css" rel="stylesheet" media="all" href="css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" media="all" href="css/styles.css" />
+
+
+    <!-- JavaScript fallback to provide HTML5 features in legacy browsers -->
+    <!-- [if IE]>
+        <script type="text/javascript" src="app/lib/fallback/html5shiv.min.js"></script>
+    <[endif] -->
+
+</head>
+
+
+<body>
+
+    <noscript>If you are reading this text is because your web browser does not allow JavaScript. In that case, the website will not be viewed perfect so please, try to enable it or just change to a better browser</noscript>
+
+
+    <div id="modal">
+        <h2 class="headline"></h2>
+        <p class="details"></p>
+    </div>
+
+        <header class="header navbar navbar-inverse">
+            <div class="navbar-inner">
+                <div class="columns nine auto">
+                    <h1 class="brand left title">WebGL Experiments with Three, CubicVR and Jax</h1>
+                </div>
+            </div>
+        </header>
+
+        <section class="columns twelve tall">
+
+            <aside class="three columns left tall aside">
+                <header class="padding">
+                    <h2>Description</h2>
+                    <p>This visualizator displays different types of basic scenarios implemented with Three, CubicVR and JAX frameworks</p>
+                </header>
+
+                <article>
+                    <header class="columns ten auto">
+                        <p id="framework" class="left">Select Framework</p>
+
+                        <div class="btn-group right">
+                            <button class="btn active">Three</button>
+                            <button class="btn">CubicVR</button>
+                            <button class="btn">Jax</button>
+                        </div>
+
+                        <div class="clear"></div>
+                    </header>
+
+                    <nav>
+                        <ul class="nav nav-list">
+                            <li class="item active">
+                                <a href="#scene">Basic Scene <i class="icon-chevron-right right"></i></a>
+                            </li>
+                            <li class="item">
+                                <a href="#models-json">Model import (JSON) <i class="icon-chevron-right right"></i></a>
+                            </li>
+                            <li class="item">
+                                <a href="#models-collada">Model import (Collada) <i class="icon-chevron-right right"></i></a>
+                            </li>
+                            <li class="item">
+                                <a href="#controls">Controls <i class="icon-chevron-right right"></i></a>
+                            </li>
+                            <li class="item">
+                                <a href="#lights">Lights <i class="icon-chevron-right right"></i></a>
+                            </li>
+                            <li class="item">
+                                <a href="#collision">Collision Detection <i class="icon-chevron-right right"></i></a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </article>
+            </aside>
+
+
+            <article id="visual" class="nine columns left tall">
+                <div class="alerts">
+                    <div class="alert hidden">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Warning!</strong> Please, select one of the 3 frameworks above
+                    </div>
+                </div>
+
+                <!--<canvas id="canvas" width="3000" height="3000"></canvas>-->
+                <iframe src="html/iframe.html" class="fat tall"></iframe>
+            </article>
+
+            <div class="clear"></div>
+        </section>
+
+        <footer>
+            <!--<p class="copyright">Telefónica I+D</p>-->
+            <p>&copy; Telefonica Digital and Open Innovation Lab (UPM), 2012</p>
+        </footer>
+
+
+    <!-- JavaScript -->
+
+    <!-- Development Mode -->
+    <script type="text/javascript" src="js/lib/jquery-1.8.2.min.js"></script>       <!-- DOM/Ajax Library -->
+
+    <script type="text/javascript" src="js/lib/webgl/CubicVR.js"></script>          <!-- WebGL Frameworks -->
+    <script type="text/javascript" src="js/lib/webgl/Three.js"></script>
+    <script type="text/javascript" src="js/lib/webgl/Jax.js"></script>
+
+    <script type="text/javascript" src="js/ViewController.js"></script>
+
+
+</body>
+
+
+</html>
