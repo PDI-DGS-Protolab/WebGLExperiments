@@ -1,0 +1,31 @@
+
+/* Hot-fixes */
+
+canvas {
+    background-color: black;
+    left : 0px;
+    top  : 0px;
+    position : absolute;
+    background-position : initial initial;
+    background-repeat : initial initial;
+}
+
+
+#modal {
+    position: absolute;
+    bottom: 3%;
+    right: 5%;
+    width: 350px;
+    height: 110px;
+    opacity: 0.85;
+    z-index: 20000;
+    background: white;
+    border-radius: 4px;
+    padding: 20px;
+    display : none;
+}
+
+
+#framework {
+    padding-top: 5px;
+}
