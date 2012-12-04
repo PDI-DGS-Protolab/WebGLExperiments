@@ -216,3 +216,17 @@ function importModelCollada(){
 function setLightControls() {
     window.parent.addEventListener('keypress', swapLight, false);
 }
+
+function onWindowResize() {
+
+    var width  = window.innerWidth;
+    var height = window.innerHeight;
+
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( width, height );
+
+}
+
+window.addEventListener( 'resize', onWindowResize, false);
