@@ -40,7 +40,7 @@
 
 
 
-    <header class="header navbar navbar-inverse">
+    <header class="header navbar navbar-inverse min-width">
         <div class="navbar-inner">
             <div class="columns nine auto">
                 <h1 class="left title">Telefónica I+D Visualizator</h1>
@@ -52,16 +52,16 @@
 
 
 
-    <section class="columns twelve tall">
+    <div class="columns twelve tall min-width whitesmoke">
 
-        <aside class="three columns left tall aside">
+        <aside class="three columns left tall aside whitesmoke">
             <header class="padding">
-                <h2>Description</h2>
+                <h2 class="title">Description</h2>
                 <p>This visualizator displays different types of basic scenarios implemented with Three, CubicVR and JAX frameworks</p>
             </header>
 
-            <article>
-                <header class="columns ten auto">
+            <section>
+                <header id="framework-selection" class="columns ten auto">
                     <p id="framework" class="left">Select Framework</p>
 
                     <div class="btn-group right">
@@ -90,31 +90,38 @@
                         <li class="item">
                             <a href="#lights" data-description="">Lights <i class="icon-chevron-right right"></i></a>
                         </li>
+                        <!--
                         <li class="item">
                             <a href="#collision" data-description="">Collision Detection <i class="icon-chevron-right right"></i></a>
                         </li>
+                        -->
                     </ul>
                 </nav>
-            </article>
+            </section>
 
-            <footer class="footer padding">
-                <p>&copy; Telefonica Digital and Open Innovation Lab (UPM), 2012</p>
+            <footer class="footer">
+                <p>&copy; Telefonica Digital, 2012</p>
             </footer>
         </aside>
 
 
-        <article id="visual" class="nine columns left tall">
-            <div class="alerts">
-                <div class="alert hidden">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Warning!</strong> Please, select one of the 3 frameworks above
+        <article class="nine columns right tall visual">
+            <!--
+                <div class="alerts">
+                    <div class="alert hidden">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Warning!</strong> Please, select one of the 3 frameworks above
+                    </div>
                 </div>
-            </div>
+            -->
 
             <iframe src="html/iframe.html" class="fat tall"></iframe>
         </article>
 
-    </section>
+
+        <div class="clear"></div>
+
+    </div>
 
 
 
@@ -122,11 +129,6 @@
 
     <!-- Development Mode -->
     <script type="text/javascript" src="js/lib/jquery-1.8.2.min.js"></script>       <!-- DOM/Ajax Library -->
-
-    <script type="text/javascript" src="js/lib/webgl/CubicVR.js"></script>          <!-- WebGL Frameworks -->
-    <script type="text/javascript" src="js/lib/webgl/Three.js"></script>
-    <script type="text/javascript" src="js/lib/webgl/Jax.js"></script>
-
     <script type="text/javascript" src="js/ViewController.js"></script>
 
 
