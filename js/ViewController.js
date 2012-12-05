@@ -3,13 +3,18 @@
 
     "use strict";
 
+
+
+    /* Global Variables */
+
     var listItems = $('.item');
     var buttons   = $('.btn');
 
-    var framework = buttons.eq(0).addClass('active').text().toLowerCase();
+    var framework = "";
 
 
-    /* Auxiliary Function */
+
+    /* Auxiliary Functions */
 
     var loadIframe = function( iframe, test ) {
 
@@ -22,9 +27,10 @@
         script.type= 'text/javascript';
         script.src= js;
 
-
         var bodyiframe = iframe.contentDocument.body;
         bodyiframe.appendChild( script );
+
+        toggleJaxCanvas( bodyiframe );
 
     };
 
@@ -38,15 +44,30 @@
             callback(iframe, test);
         }, 200);
 
-
     };
 
 
     var getNameTest = function ( test ) {
+
         var nameTest = test.find('a').attr('href');
-        nameTest = nameTest.slice( 1, nameTest.length );
-        return nameTest;
+        return nameTest.slice( 1, nameTest.length );
+
     };
+
+
+    var toggleJaxCanvas = function( body ) {
+
+        var jaxCanvas = $(body).find('#canvas');
+
+        if ( framework === 'jax' ) {
+            jaxCanvas.removeClass('hidden');
+
+        } else {
+            jaxCanvas.addClass('hidden');
+        }
+
+    };
+
 
 
     /* Event Handlers */
@@ -67,7 +88,7 @@
     };
 
 
-    var buttonsHandler = function( event, param, yeah ) {
+    var buttonsHandler = function( event, param ) {
 
         buttons.removeClass('active');
         var b = $(event.target).toggleClass('active');
@@ -81,7 +102,9 @@
 
         var nameTest = getNameTest( test );
         loadTest( nameTest, loadIframe );
+
     };
+
 
     /*
     var showAlert = function ( opt ) {
@@ -98,14 +121,29 @@
 
     };
     */
-    var name = getNameTest( listItems.first() );
-    loadTest( name, loadIframe );
 
 
-    /* Event Assignments */
 
-    $(listItems).on('click', testHandler);
-    $(buttons).on('click', buttonsHandler);
+    /* Main */
+
+    (function() {
+
+        // Initialize visualizator loading the first test and first framework
+        var name = getNameTest( listItems.first() );
+        loadTest( name, loadIframe );
+
+        framework = buttons.first()
+                        .addClass('active')
+                        .text().toLowerCase();
+
+
+        // Event Assignments
+        $(listItems).on('click', testHandler);
+        $(buttons).on('click', buttonsHandler);
+
+    })();
+
+
 
 
 })( window, jQuery );
