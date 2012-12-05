@@ -6,6 +6,8 @@ Jax.Controller.create "Teapot", ApplicationController,
             mesh: new Jax.Mesh.Cube
                 material: "teapot"
 
+        @skybox = @world.addObject(new Jax.Model({mesh: new Jax.Mesh.Sphere({radius:25,material:Material.find("skybox")})}));
+
         @world.addObject teapot
         @world.addLightSource "sun"
         @player.camera.lookAt [0, 0, -5], [0, 1.25, -3]
