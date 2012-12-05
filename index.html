@@ -39,83 +39,86 @@
     <noscript>If you are reading this text is because your web browser does not allow JavaScript. In that case, the website will not be viewed perfect so please, try to enable it or just change to a better browser</noscript>
 
 
+    <div id="modal">
+        <h2 class="headline"></h2>
+        <p class="details"></p>
+    </div>
 
-    <header class="header navbar navbar-inverse">
-        <div class="navbar-inner">
-            <div class="columns nine auto">
-                <h1 class="left title">Telefónica I+D Visualizator</h1>
-                <h2 class="right subtitle">WebGL Experiments with Three, CubicVR and Jax</h2>
-                <div class="clear"></div>
-            </div>
-        </div>
-    </header>
-
-
-
-    <section class="columns twelve tall">
-
-        <aside class="three columns left tall aside">
-            <header class="padding">
-                <h2>Description</h2>
-                <p>This visualizator displays different types of basic scenarios implemented with Three, CubicVR and JAX frameworks</p>
-            </header>
-
-            <article>
-                <header class="columns ten auto">
-                    <p id="framework" class="left">Select Framework</p>
-
-                    <div class="btn-group right">
-                        <button class="btn active">Three</button>
-                        <button class="btn">CubicVR</button>
-                        <button class="btn">Jax</button>
-                    </div>
-
-                    <div class="clear"></div>
-                </header>
-
-                <nav>
-                    <ul class="nav nav-list">
-                        <li class="item active">
-                            <a href="#scene" data-description="">Basic Scene <i class="icon-chevron-right right"></i></a>
-                        </li>
-                        <li class="item">
-                            <a href="#models-json" data-description="">Models imported (JSON) <i class="icon-chevron-right right"></i></a>
-                        </li>
-                        <li class="item">
-                            <a href="#models-collada" data-description="">Models import (Collada) <i class="icon-chevron-right right"></i></a>
-                        </li>
-                        <li class="item">
-                            <a href="#controls" data-description="">Controls <i class="icon-chevron-right right"></i></a>
-                        </li>
-                        <li class="item">
-                            <a href="#lights" data-description="">Lights <i class="icon-chevron-right right"></i></a>
-                        </li>
-                        <li class="item">
-                            <a href="#collision" data-description="">Collision Detection <i class="icon-chevron-right right"></i></a>
-                        </li>
-                    </ul>
-                </nav>
-            </article>
-
-            <footer class="footer padding">
-                <p>&copy; Telefonica Digital and Open Innovation Lab (UPM), 2012</p>
-            </footer>
-        </aside>
-
-
-        <article id="visual" class="nine columns left tall">
-            <div class="alerts">
-                <div class="alert hidden">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <strong>Warning!</strong> Please, select one of the 3 frameworks above
+        <header class="header navbar navbar-inverse">
+            <div class="navbar-inner">
+                <div class="columns nine auto">
+                    <h1 class="brand left title">WebGL Experiments with Three, CubicVR and Jax</h1>
                 </div>
             </div>
+        </header>
 
-            <iframe src="html/iframe.html" class="fat tall"></iframe>
-        </article>
+        <section class="columns twelve tall">
 
-    </section>
+            <aside class="three columns left tall aside">
+                <header class="padding">
+                    <h2>Description</h2>
+                    <p>This visualizator displays different types of basic scenarios implemented with Three, CubicVR and JAX frameworks</p>
+                </header>
 
+                <article>
+                    <header class="columns ten auto">
+                        <p id="framework" class="left">Select Framework</p>
+
+                        <div class="btn-group right">
+                            <button class="btn active">Three</button>
+                            <button class="btn">CubicVR</button>
+                            <button class="btn">Jax</button>
+                        </div>
+
+                        <div class="clear"></div>
+                    </header>
+
+                    <nav>
+                        <ul class="nav nav-list">
+                            <li class="item active">
+                                <a href="#scene">Basic Scene <i class="icon-chevron-right right"></i></a>
+                            </li>
+                            <li class="item">
+                                <a href="#models-json">Model import (JSON) <i class="icon-chevron-right right"></i></a>
+                            </li>
+                            <li class="item">
+                                <a href="#models-collada">Model import (Collada) <i class="icon-chevron-right right"></i></a>
+                            </li>
+                            <li class="item">
+                                <a href="#controls">Controls <i class="icon-chevron-right right"></i></a>
+                            </li>
+                            <li class="item">
+                                <a href="#lights">Lights <i class="icon-chevron-right right"></i></a>
+                            </li>
+                            <li class="item">
+                                <a href="#collision">Collision Detection <i class="icon-chevron-right right"></i></a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </article>
+            </aside>
+
+
+            <article id="visual" class="nine columns left tall">
+                <div class="alerts">
+                    <div class="alert hidden">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Warning!</strong> Please, select one of the 3 frameworks above
+                    </div>
+                </div>
+
+                <!--<canvas id="canvas" width="3000" height="3000"></canvas>-->
+                <iframe src="html/iframe.html" class="fat tall"></iframe>
+            </article>
+
+            <div class="clear"></div>
+        </section>
+
+        <footer>
+            <!--<p class="copyright">Telefónica I+D</p>-->
+            <p>&copy; Telefonica Digital and Open Innovation Lab (UPM), 2012</p>
+        </footer>
 
 
     <!-- JavaScript -->
