@@ -11,7 +11,7 @@ var headline = modal.find('.headline');
 var details  = modal.find('.details');
 
 var headlinesA = [ 'Point Lights', 'Directional Light', 'Spot Light', 'Ambient Light' ];
-var detailsA = [ 'with diffuse and specular modifiers', '', '', '' ];
+var detailsA = [ '', '', '', '' ];
 
 var currentLights = [];
 
@@ -92,11 +92,14 @@ function swapLight ( event ) {
         current = (current + 1) % lights.length;
 
         lights[ current ]();
-
+	
+		scene.remove(model);
+		importModelCollada();
+		
         headline.text( headlinesA[current] );
         details.text( detailsA[current] );
     }
-}
+};
 
 function animate() {
 	var time = Date.now() * 0.0005;
@@ -126,6 +129,17 @@ function animate() {
         light4.position.x = Math.sin( time * 0.3 ) * 200;
         light4.position.y = Math.cos( time * 0.7 ) * 250;
         light4.position.z = Math.sin( time * 0.5 ) * 200;
+    } 
+    else if ( current !== 3 ){
+        currentLights[0].position.x = Math.sin( time * 0.7 ) * 200;
+        currentLights[0].position.y = Math.cos( time * 0.5 ) * 250;
+        currentLights[0].position.z = Math.cos( time * 0.3 ) * 200;
+        currentLights[0].target = model;
+        
+        currentLights[1].position.x = Math.cos( time * 0.3 ) * 200;
+        currentLights[1].position.y = Math.sin( time * 0.5 ) * 250;
+        currentLights[1].position.z = Math.sin( time * 0.7 ) * 200;
+        currentLights[1].target = model;
     }
 
     render();
@@ -181,26 +195,47 @@ function pointLights (){
 }
 
 function directionalLights() {
-    var directionalLight = new THREE.DirectionalLight( 0xffffff );
-    directionalLight.position.set( 0, -70, 100 ).normalize();
-    scene.add( directionalLight );
-    directionalLight.color.setHSV( 0.1, 0.725, 0.9 );
-    currentLights = [ directionalLight ];
+    var directionalLight1 = new THREE.DirectionalLight( 0xffffff );
+    scene.add( directionalLight1 );
+    
+    var directionalLight2 = new THREE.DirectionalLight( 0xffffff );
+    scene.add( directionalLight2 );
+    
+    currentLights = [ directionalLight1, directionalLight2 ];
 }
 
-function spotLights() {
-    var spotLight = new THREE.SpotLight( 0xffaa00 );
-    scene.add( spotLight );
-    currentLights = [ spotLight ];
+function spotLights() {	
+	var spotLight1 = new THREE.SpotLight( 0xffffff ); 
+		
+	spotLight1.castShadow = true;  
+	spotLight1.shadowMapWidth = 1024; 
+	spotLight1.shadowMapHeight = 1024;  
+	spotLight1.shadowCameraNear = 500; 
+	spotLight1.shadowCameraFar = 4000; 
+	spotLight1.shadowCameraFov = 30;  
+	
+	scene.add( spotLight1 );
+	
+	var spotLight2 = new THREE.SpotLight( 0xffffff ); 
+		
+	spotLight2.castShadow = true;  
+	spotLight2.shadowMapWidth = 1024; 
+	spotLight2.shadowMapHeight = 1024;  
+	spotLight2.shadowCameraNear = 500; 
+	spotLight2.shadowCameraFar = 4000; 
+	spotLight2.shadowCameraFov = 30;  
+	
+	scene.add( spotLight2 );
+	
+    currentLights = [ spotLight1, spotLight2 ];
 }
+
 
 function ambientLights() {
     var ambientLight = new THREE.AmbientLight( 0xffffff );
-    ambientLight.color.setHSV( 0.1, 0.5, 0.3 );
     scene.add( ambientLight );
     currentLights = [ ambientLight ];
 }
-
 
 
 function importModelCollada(){
@@ -212,6 +247,7 @@ function importModelCollada(){
 		camera.lookAt(model.position);
 	});
 }
+
 
 function setLightControls() {
     window.parent.addEventListener('keypress', swapLight, false);
