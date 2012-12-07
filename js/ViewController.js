@@ -22,10 +22,9 @@
 
         var path = '../js/'  + framework + '/';
 
-        var js   = path + test + '.js';
-        var script= document.createElement('script');
-        script.type= 'text/javascript';
-        script.src= js;
+        var script  = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src  = path + test + '.js';
 
         var bodyiframe = iframe.contentDocument.body;
         bodyiframe.appendChild( script );
@@ -88,7 +87,9 @@
     };
 
 
-    var buttonsHandler = function( event, param ) {
+    var buttonsHandler = function( event ) {
+
+        event.preventDefault();
 
         buttons.removeClass('active');
         var b = $(event.target).toggleClass('active');
@@ -142,7 +143,6 @@
         $(buttons).on('click', buttonsHandler);
 
     })();
-
 
 
 
