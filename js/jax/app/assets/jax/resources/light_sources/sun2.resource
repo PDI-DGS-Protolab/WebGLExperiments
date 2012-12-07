@@ -2,12 +2,12 @@ shadowcaster: true
 
 enabled: true
 
-position:
-  x: -20
-  y: 0
-  z: 0
+direction:
+  x: 1
+  y: 1
+  z: 1.5
 
-type: POINT_LIGHT
+type: DIRECTIONAL_LIGHT
 
 attenuation:
   constant: 0
