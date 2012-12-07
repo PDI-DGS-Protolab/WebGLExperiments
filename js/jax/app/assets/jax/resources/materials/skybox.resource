@@ -1,8 +1,8 @@
 # ambient component multiplied with the light source's ambient component
 ambient:
   red:   1.0
-  green: 1.0
-  blue:  1.0
+  green: 0.2
+  blue:  0.2
   alpha: 1.0
 
 # diffuse component multiplied with the light source's diffuse component
