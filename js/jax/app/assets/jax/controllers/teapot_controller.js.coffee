@@ -5,6 +5,14 @@ movement =
   left     : 0
   right    : 0
 
+modal = $('#modal')
+
+headline = modal.find('.headline')
+details  = modal.find('.details')
+
+headlinesA = [ 'Point Light', 'Directional Light', 'Spot Light' ]
+detailsA = [ 'Red, Green and Blue colors', 'Blue', 'Violet and Brown' ]
+
 
 Jax.Controller.create "Teapot", ApplicationController,
 
@@ -27,11 +35,13 @@ Jax.Controller.create "Teapot", ApplicationController,
     changeLights : ->
         @lights = [ @point, @directional, @spot ]
         f = @lights[@currentLight]
+        headline.text headlinesA[@currentLight]
+        details.text detailsA[@currentLight]
         f.call(this)
 
     index: ->
         @createScene()
-
+        modal.show()
 
     createScene: ->
         @teapot = new Jax.Model
