@@ -1,4 +1,14 @@
+
+movement =
+  forward  : 0
+  backward : 0
+  left     : 0
+  right    : 0
+
+
 Jax.Controller.create "Teapot", ApplicationController,
+
+    pos : [0, -0.5, 0]
 
     currentLight : 0
 
@@ -6,18 +16,17 @@ Jax.Controller.create "Teapot", ApplicationController,
         @world.addLightSource "point1"
         @world.addLightSource "point2"
         @world.addLightSource "point3"
-        @world.addLightSource "point4"
 
     directional: ->
         @world.addLightSource "sun1"
-        @world.addLightSource "sun2"
 
     spot: ->
-        @world.addLightSource "spot"
+        @world.addLightSource "spot1"
+        @world.addLightSource "spot2"
 
     changeLights : ->
-        l = [ @point, @directional, @spot ]
-        f = l[@currentLight]
+        @lights = [ @point, @directional, @spot ]
+        f = @lights[@currentLight]
         f.call(this)
 
     index: ->
@@ -25,27 +34,34 @@ Jax.Controller.create "Teapot", ApplicationController,
 
 
     createScene: ->
-        teapot = new Jax.Model
-            position: [0, 0, -5]
+        @teapot = new Jax.Model
+            position: @pos
             direction: [3, 0, 3]
             mesh: new Jax.Mesh.Cube
                 material: "teapot"
 
         @skybox = @world.addObject(new Jax.Model({mesh: new Jax.Mesh.Sphere({radius:25,material:Material.find("skybox")})}));
 
-        @world.addObject teapot
-        @player.camera.lookAt [0, 0, -5], [0, 1.25, -3]
+        @world.addObject @teapot
+        @player.camera.lookAt @pos, [0, 1.25, -3]
 
         @changeLights()
 
 
+    mouse_dragged: (event) ->
+        @player.camera.move 0.01 * event.diffy
+        @player.camera.strafe 0.01 * -event.diffx
+        @player.camera.lookAt @teapot.camera.getPosition @player.camera.getPosition
+
+
     key_pressed: (event) ->
-        if event.keyCode is KeyEvent.DOM_VK_ENTER
-            console.log "hola"
+        if event.keyCode is KeyEvent.DOM_VK_RETURN
             @world.dispose()
-            @currentLight = (@currentLight + 1) % @currentLight.length
+            @currentLight = (@currentLight + 1) % @lights.length
             @createScene()
 
 
-    update: ->
-
+    update: (timechange) ->
+        speed = 1.5 * timechange
+        degrees = Math.PI / 120
+        @teapot.camera.rotate degrees, 0, 1, 0

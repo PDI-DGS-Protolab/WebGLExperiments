@@ -3,8 +3,8 @@ shadowcaster: true
 enabled: true
 
 position:
-  x: -3
-  y: -3
+  x: 0
+  y: 0
   z: -3
 
 type: POINT_LIGHT
@@ -16,9 +16,9 @@ attenuation:
 
 color:
   ambient:
-    red: 1
-    green: 0.66
-    blue: 0
+    red: 5
+    green: 5
+    blue: 5
     alpha: 1
 
   diffuse:

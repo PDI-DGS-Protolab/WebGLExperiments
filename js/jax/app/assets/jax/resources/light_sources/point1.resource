@@ -16,9 +16,9 @@ attenuation:
 
 color:
   ambient:
-    red: 1
+    red: 5
     green: 0
-    blue: 0.25
+    blue: 0
     alpha: 1
 
   diffuse:

@@ -3,9 +3,9 @@ shadowcaster: true
 enabled: true
 
 direction:
-  x: 1
-  y: 1
-  z: 1.5
+  x: 3
+  y: 0
+  z: 0
 
 type: DIRECTIONAL_LIGHT
 
@@ -16,10 +16,10 @@ attenuation:
 
 color:
   ambient:
-    red: 0.2
-    green: 0.2
-    blue: 0.2
-    alpha: 1
+    red: 0
+    green: 0
+    blue: 1
+    alpha: 0.5
 
   diffuse:
     red: 0.5

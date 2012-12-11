@@ -3,13 +3,13 @@ shadowcaster: true
 enabled: true
 
 position:
-  x: -20
+  x: 3
   y: 0
   z: 0
 
 direction:
-  x: 1
-  y: 0
+  x: -3
+  y: 1
   z: 0
 
 type: SPOT_LIGHT
@@ -21,9 +21,9 @@ attenuation:
 
 color:
   ambient:
-    red: 0.2
-    green: 0.2
-    blue: 0.2
+    red: 0
+    green: 1
+    blue: 4
     alpha: 1
 
   diffuse:

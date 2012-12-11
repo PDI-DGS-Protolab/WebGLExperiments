@@ -5,7 +5,7 @@ enabled: true
 position:
   x: 0
   y: 0
-  z: -3
+  z: 3
 
 type: POINT_LIGHT
 
@@ -16,9 +16,9 @@ attenuation:
 
 color:
   ambient:
-    red: 0.5
-    green: 1
-    blue: 0.5
+    red: 0
+    green: 0
+    blue: 5
     alpha: 1
 
   diffuse:
