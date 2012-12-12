@@ -137,7 +137,7 @@
         var details  = modal.find('.details');
 
         var headlinesA = [ 'Point Light', 'Directional Light', 'Spot Light', 'Ambient Light' ];
-        var detailsA = [ 'with diffuse and specular modifiers', '', '', '' ];
+        var detailsA = [ '4 colored lights', '', '', '' ];
 
         headline.text( headlinesA[current] );
         details.text( detailsA[current] );
