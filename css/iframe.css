@@ -14,18 +14,35 @@ canvas {
 
 
 #modal {
-    background : white;
-    border-radius : 4px;
     display : none;
-
     position: absolute;
-    bottom : 3%;
+    bottom : 7%;
     right  : 5%;
 
-    padding : 20px;
+    border-radius : 4px;
     opacity : 0.85;
-    z-index : 20000;
-
+    padding : 0 20px;
     width  : 350px;
     height : 110px;
+    z-index : 20000;
+
+    font-family: 'Verdana', sans-serif;
+}
+
+.whiteModal {
+    background-color : white;
+    color : #121212;
+}
+
+.darkModal {
+    background-color : #121212;
+    color : white;
+}
+
+#modal .headline {
+    font-size : 1.35em;
+}
+
+#modal .details {
+    font-size : 0.9em;
 }
