@@ -25,9 +25,18 @@ Jax.Controller.create "Teapot", ApplicationController,
         @world.addLightSource "sun"
         @player.camera.lookAt [0, 0, -5], [0, 1.25, -3]
 
+        that = this
+
+        window.parent.addEventListener 'keydown', (event) ->
+            that.key_pressed( event )
+        , false
+
+        window.parent.addEventListener 'keyup', (event) ->
+            that.key_released( event )
+        , false
+
 
     mouse_dragged: (event) ->
-        console.log('dragging')
         @player.camera.pitch 0.01 *  event.diffy
         @player.camera.yaw   0.01 * -event.diffx
 
@@ -51,12 +60,13 @@ Jax.Controller.create "Teapot", ApplicationController,
     update: (timechange) ->
         speed = 1.5 * timechange
         @teapot.camera.move (movement.forward + movement.backward) * speed
-        # @teapot.camera.strafe (movement.left + movement.right) * speed
+
+        rot = Math.PI / 90
 
         if movement.left
-            @teapot.camera.rotate Math.PI / 90, 0, 1, 0
+            @teapot.camera.rotate rot, 0, 1, 0
         else if movement.right
-            @teapot.camera.rotate -Math.PI / 90, 0, 1, 0
+            @teapot.camera.rotate -rot, 0, 1, 0
 
         if movement.forward or movement.backward or movement.left or movement.right
             @player.camera.lookAt @teapot.camera.getPosition @player.camera.getPosition

@@ -57,7 +57,7 @@ function init() {
 
 
     // Light
-    modal.show();
+    modal.show().addClass('whiteModal').removeClass('darkModal');
 
     headline.text( headlinesA[current] );
     details.text( detailsA[current] );

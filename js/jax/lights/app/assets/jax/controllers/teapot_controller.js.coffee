@@ -6,7 +6,6 @@ movement =
   right    : 0
 
 modal = $('#modal')
-
 headline = modal.find('.headline')
 details  = modal.find('.details')
 
@@ -38,10 +37,16 @@ Jax.Controller.create "Teapot", ApplicationController,
         headline.text headlinesA[@currentLight]
         details.text detailsA[@currentLight]
         f.call(this)
+        modal.show().addClass('darkModal').removeClass('whiteModal');
 
     index: ->
         @createScene()
         modal.show()
+        that = this
+
+        window.parent.addEventListener 'keydown', (event) ->
+            that.key_pressed( event )
+        , false
 
     createScene: ->
         @teapot = new Jax.Model

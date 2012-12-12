@@ -131,7 +131,8 @@
 
         var current = 0;
         var modal = $('#modal');
-        modal.show();
+        modal.show().addClass('whiteModal').removeClass('darkModal');
+
         var headline = modal.find('.headline');
         var details  = modal.find('.details');
 
