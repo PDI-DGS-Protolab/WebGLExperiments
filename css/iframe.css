@@ -14,18 +14,23 @@ canvas {
 
 
 #modal {
-    background : white;
     border-radius : 4px;
     display : none;
 
     position: absolute;
-    bottom : 3%;
+    bottom : 7%;
     right  : 5%;
 
-    padding : 20px;
+    padding : 0 20px;
     opacity : 0.85;
     z-index : 20000;
 
     width  : 350px;
     height : 110px;
+}
+
+.whiteModal { background-color : white }
+.darkModal  {
+    background-color : #121212;
+    color : white;
 }
