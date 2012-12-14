@@ -3,10 +3,18 @@
 
 .hidden { display : none; }
 
+body {
+    margin   : 0;
+    padding  : 0;
+    overflow : hidden;
+}
+
 canvas {
     background-color    : black;
+    /*
     background-position : initial initial;
     background-repeat   : initial initial;
+    */
     position : absolute;
     top  : 0;
     left : 0;

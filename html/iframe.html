@@ -18,7 +18,7 @@
     </div>
 
 
-    <canvas id="canvas" class="hidden">
+    <canvas id="canvas" width="1600", height="1600">
         Sorry, your browser doesn't support the &lt;canvas/&gt; tag. Please come back with a newer
         browser
     </canvas>
@@ -31,6 +31,18 @@
 
     <script type="text/javascript" src="../js/lib/webgl/ColladaLoader.js"></script>
     <script type="text/javascript" src="../js/lib/webgl/TrackballControls.js"></script>
+    <!--script>
+        var path = '../js/'  + 'jax' + '/';
+
+        var script  = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src  = path + 'scene' + '.js';
+
+        setTimeout(function() {
+            var bodyiframe = $('body')[0];
+            bodyiframe.appendChild( script );
+        }, 800);
+</script-->
 
 </body>
 
