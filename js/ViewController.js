@@ -16,9 +16,8 @@
 
     /* Auxiliary Functions */
 
-    var loadIframe = function( iframe, test ) {
 
-        iframe = iframe[0];
+    var loadIframe = function( iframe, test ) {
 
         var path = '../js/'  + framework + '/';
 
@@ -28,20 +27,18 @@
 
         var bodyiframe = iframe.contentDocument.body;
         bodyiframe.appendChild( script );
-
         toggleJaxCanvas( bodyiframe );
-
     };
 
 
     var loadTest = function ( test, callback ) {
 
-        var iframe = $('iframe');
-        iframe.attr({ 'src' : 'html/iframe.html' });
+        var iframe = $('iframe')[0];
 
-        setTimeout(function() {
+        iframe.contentWindow.location.reload();
+        iframe.onload = function() {
             callback(iframe, test);
-        }, 200);
+        };
 
     };
 
@@ -64,6 +61,63 @@
         } else {
             jaxCanvas.addClass('hidden');
         }
+
+    };
+
+
+    var getTestsFromServer = function( callback ) {
+
+        var path = 'js/' + framework;
+
+        $.get(path, function(data) {
+
+            var links = $(data).find('a');
+
+            var scriptsList = [];
+
+            for (var i = 0; i < links.length; i++) {
+                var s = links.eq(i).attr('href');
+                var l = s.length;
+
+
+                if ( s.substring( l-2, l ) === 'js' ) {
+                    var name = s.substring( 0, l-3 );
+                    scriptsList.push( name );
+                }
+            }
+
+            callback( scriptsList );
+
+        });
+
+    };
+
+
+    var enableTests = function() {
+
+        getTestsFromServer(function(scripts) {
+
+            for (var i = 0; i < listItems.length; i++) {
+
+                var item = listItems.eq(i);
+
+                var s = scripts.filter(function(i) {
+                    var name = item.find('a').attr('href');
+                    name = name.substring( 1, name.length );
+                    return i === name;
+                });
+
+                if ( s.length ) {   // The test script exists
+                    item.removeClass('disable').addClass('enable');
+                    item.on('click', testHandler);
+                } else {
+                    item.addClass('disable').removeClass('enable');
+                    item.off('click', testHandler);
+                }
+
+            }
+
+        });
 
     };
 
@@ -102,26 +156,11 @@
         });
 
         var nameTest = getNameTest( test );
+
+        enableTests();
         loadTest( nameTest, loadIframe );
 
     };
-
-
-    /*
-    var showAlert = function ( opt ) {
-
-        var alert = $('.alert');
-        var TIME = 5000;
-
-        if ( alert.css('display') === 'none' ) {
-            alert.fadeIn();
-            setTimeout(function() {
-                alert.fadeOut();
-            }, TIME);
-        }
-
-    };
-    */
 
 
 
@@ -137,6 +176,7 @@
                         .addClass('active')
                         .text().toLowerCase();
 
+        enableTests();
 
         // Event Assignments
         $(listItems).on('click', testHandler);
