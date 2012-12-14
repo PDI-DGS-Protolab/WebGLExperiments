@@ -17,19 +17,16 @@ var maintainCanvasAspectRatio = function() {
     window.context.canvas.width  = window.innerWidth;
     window.context.canvas.height = window.innerHeight;
 
-    window.context.player.camera.perspective(window.context.canvas);
+    setTimeout(function () {
+        window.context.player.camera.perspective(window.context.canvas);
+    });
 
 };
 
 
 setTimeout(function() {
-    var canvas = document.getElementById('canvas');
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
 
     window.context = new Jax.Context('canvas');
-//    window.context.fillStyle = "#000";
-
     window.context.redirectTo("teapot");
 
     maintainCanvasAspectRatio();
