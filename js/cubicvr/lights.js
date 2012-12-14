@@ -35,6 +35,8 @@
 
         });
 
+        CubicVR.addResizeable(scene.camera);
+
         var duck = scene.getSceneObject('duck');
 
 
